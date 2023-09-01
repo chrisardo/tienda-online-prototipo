@@ -1,0 +1,356 @@
+@import url(https://fonts.googleapis.com/css?family=Yamone+Kaffeesatz);
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
+*{
+    box-sizing: border-box;
+}
+img{
+    display: block;
+    max-width: 100%;
+   
+}
+
+body{
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    letter-spacing: 1.5px;
+}
+
+.section__titulo{
+    text-align: center;
+    font-size: 60px;
+    color: firebrick;
+}
+/*.icon-chef-food-restaurant-streamline{
+    position: absolute;
+    margin-left: 21%;
+}*/
+.contenedor{
+    margin: auto;
+    width: 100%;
+}
+/*---Estilos del header---*/
+
+.header{
+    height: 60px;
+}
+
+.header .contenedor{
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo, .icon-menu{
+    margin: 4px;
+    color: #fff;
+}
+.icon-menu{
+    display: block;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    background: cadetblue;
+    color:black;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 6px;
+    margin-left: auto;
+    cursor: pointer;
+}
+/*--Estilos del menu--*/
+.nav{
+    position: absolute;
+    top: 60px;/*0*/
+    left: -100%;
+    width: 100%;
+    transition: all 0.4s;
+
+}
+
+.menu{
+    list-style: none;
+    padding: 4px;
+    margin: 1.5px;    
+}
+
+.menu__link{
+    display: block;
+    padding: 20px;
+    background: greenyellow;
+    text-decoration: none;
+    color: whitesmoke;
+}
+.menu__link:hover{
+    background: green;
+    color: whitesmoke;
+}
+.mostrar{
+    left: -10px;
+}
+
+.select{
+    background:black;
+    color:whitesmoke;
+
+}
+
+/*---Estilos de banner--*/
+.banner{
+    margin-top: -95px;
+    position: relative;
+    z-index: -1000;
+    margin-bottom: 0px;
+}
+
+.banner__img{
+    width: 100%;
+}
+.banner .contenedor{
+    position: absolute;
+    top: 1%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 100%;
+    color: whitesmoke;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+}
+.banner__txt{
+    display: none;
+}
+
+/*--Estilos del info--*/
+.info__columna{
+    background: green;
+    color: white;
+    padding: 10px;
+    margin-bottom: 1%;
+   
+}
+.info__columna{
+    color: whitesmoke;
+}
+
+.info__img{
+    height: 100px;
+}
+/*--Estilos del cursos--*/
+.cursos__columna{
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.cursos__descripcion{
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    width: 70%;
+    height: 121%;
+    padding: 2px;
+}
+
+.cursos__titulo{
+    font-size: 15px;
+    margin: 2px 0;
+}
+
+.cursos__img{
+    width: 100%;
+    height: 121%;
+}
+
+/*--Estilos del footer
+.footer{
+    background: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+.footer .social [class*="icon-"]{
+    display: inline-block;
+    color: #333;
+    text-decoration: none;
+    font-size: 30px;
+    padding: 10px;
+    background: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    line-height: 40px;
+}*/
+
+/*---Estilos responsive--*/
+@media(min-width:480px){
+    .logo{
+        font-size: 40px;
+    }
+    .banner__titulo{
+        font-size: 30px;
+        margin: 5px 0;
+    }
+    .banner__txt{
+        display: block;
+        font-size: 18px;
+        margin: 7px 0;
+    }
+    .info, .cursos{
+        display: flex;
+        justify-content: space-between;
+        margin-top: -30px;
+    }
+    .info__columna{
+        width: 32%;
+        height: 45%;
+    }
+    .info__titulo{
+        font-size: 25px;
+        margin: 5px 0;
+    }
+    .section__titulo{
+        width: 100%;
+    }
+    .cursos{
+        flex-wrap: wrap;
+        margin-top: 0;
+    }
+    .cursos__columna{
+        width: 47%;
+        margin-bottom: 70px;
+    }
+    /*.footer .social [class^="icon-"]{
+        margin: 0 10px;
+    }*/
+    .info__img{
+        width: 95%;
+        height: 35%;
+    }
+    .banner__img{
+        height: 60%;
+    }
+    .icon-chef-food-restaurant-streamline{
+        position: absolute;
+        margin-left: 38%;
+    }
+}
+
+
+@media(min-width:768px){
+    .banner__titulo{
+        font-size: 50px;
+    }
+    .cursos__titulo{
+        font-size: 30px;
+    }
+    .banner__img{
+        height: 80%;
+    }
+    .icon-chef-food-restaurant-streamline{
+        position: absolute;
+        margin-left: 18%;
+    }
+    .icon-chef-food-restaurant-streamline{
+        position: absolute;
+        margin-left: 24%;
+    }
+    
+}
+@media(min-width:1024px){
+    .contenedor{
+        width: 1000px;
+    }
+    .section__titulo{
+        font-size: 50px;
+        margin: 30px 0;
+    }
+    .nav{
+        position: static;
+        width: auto;
+    }
+    .menu{
+        display: flex;
+    }
+    .icon-menu{
+        display: none;
+    }
+    .menu__link{
+        background: none;
+        font-size: 20px;
+    }
+    .select{
+        color: #fff;
+        background: #FBA919;
+    }
+    .banner_titulo{
+        font-size: 60px;
+    }
+    .banner__txt{
+        font-size: 25px;
+    }
+    .info{
+        margin-top: -20px;
+    }
+    .info__columna{
+        padding: 30px;
+    }
+    .info__titulo{
+        font-size: 40px;
+        text-align: center;
+    }
+    .cursos__descripcion{
+        padding: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        
+    }
+    .cursos__columna{
+        width: 47%;
+        margin-bottom: 90px;
+    }
+    .cursos__titulo{
+        font-size: 40px;
+    }
+    .cursos__txt{
+        font-size: 20px;
+    }
+    .menu__item{
+        background: rgba(0, 0, 0, 0.5);
+    }
+    .icon-chef-food-restaurant-streamline{
+        position: absolute;
+        margin-left: 18%;
+    }
+}
+/*.cursos__img{
+    height: 100%;
+}*/
+@media(min-width:1280px){
+    .contenedor{
+        width: 1200px;
+    }
+    .logo{
+        font-size: 60px;
+    }
+    .banner .contenedor{
+        top: 40%;
+    }
+    .info{
+        margin-top: -50px; 
+    }
+   .banner__img{
+       height: 600px;
+   }
+   .icon-chef-food-restaurant-streamline{
+    position: absolute;
+    margin-left: 19%;
+    
+   }
+}
+    

@@ -1,0 +1,537 @@
+html {
+    box-sizing: border-box;
+}
+*,* before, *:after{
+box-sizing: inherit;
+}
+body {
+    font-family: 'Open Sans', sans-serif;
+
+}
+/*globales */
+.contenedor {
+    width: 98%;
+    margin: 0 auto;
+}
+@media only screen and (min-width: 480px){
+    .contenedor{
+        width: 95%;
+    }
+}
+@media only screen and (min-width: 768px){
+    .contenedor{
+        width: 90%;
+    }
+}
+@media only screen and (min-width: 992px){
+    .contenedor{
+        width: 90%;
+    }
+}
+h2 {
+    font-family: 'Oswald', sans-serif;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+}
+
+/**aqui todo el header**/
+div.inicio {
+    
+    height: 550px;
+    width: 100%;
+    position: relative;
+    background-position: top center;
+    background-size: cover;
+     background-size: 110%;
+     animation: movimiento 15s infinite linear alternate; 
+
+}
+
+@keyframes movimiento{
+    from{
+        background-position: bottom left;
+    }to{
+        background-position: top right;
+    }
+}
+
+div.contenido-header {
+    
+    padding: 50px 50px;
+}
+
+
+.conteiner-details{
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+    margin: auto;
+    padding: 20px 10px;
+}
+
+
+.details{
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    top: 20px;
+    color: white;
+    background-color: rgb(128, 128, 128);
+     box-shadow: 0px 0px 50px #999;
+     padding: 20px 10px;
+
+}
+
+.details h1{
+    font-size: 40px;
+    font-weight: 100;
+    margin-left: 10px;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+}
+
+.details p{
+    margin-top: 10px;
+    font-size: 1.4em;
+    font-weight: 100;
+    margin-left: 10px;
+     font-family: 'Open Sans', sans-serif;
+    
+}
+
+.details a{
+    padding: 10px 20px;
+    font-size: 16px;
+    background: none;
+    border-style: none;
+    border: 1px solid white;
+    color: white;
+    margin-top: 20px;
+    transition: 300ms;
+    cursor: pointer;
+    margin-left: 50px;
+    text-decoration: none;
+}
+
+.details a:hover{
+    background: white;
+    color: rgb(0, 0, 0);
+}
+
+
+
+@media screen and (max-width: 500px){
+    .details p{
+        font-size: 18px;
+    }
+}
+
+@media only screen and (min-width: 768px){
+    div.contenido-header{
+        padding-top: 10px;
+    }
+}
+
+div.informacion-evento {
+    text-align: center;
+    color:  #ffffff;
+
+}
+ @media only screen and (min-width: 768px){
+    div.informacion-evento{
+        width: 70%;
+        margin: 0 auto;
+        margin-top: 50px;
+    }
+ }
+
+
+
+
+
+/*barraa go que proceda */
+div.barra {
+    background-color: rgba(0,0,0, 0.40);
+    padding: 5px 0;
+}
+div.logo{
+    width: 50%;
+     float: left;
+}
+div.logo img {
+    width: 15%;
+}
+
+/**/
+
+
+
+/**/
+@media only screen and (min-width: 768px){
+    div.logo {
+    width: 33%;
+    }
+}
+/* nav principal */
+nav.navegacion-principal {
+    display: none;
+    padding: 10px 0;
+}
+
+nav.navegacion-principal a {
+    font-family: 'Oswald', sans-serif;
+    color: #ffffff;
+    font-size: 1.2em;
+    background-size: 100px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all .6s ease;
+    width: 100%;
+    display: block;
+    text-align: center;
+
+}
+nav.navegacion-principal a:hover{
+    background-color: #009933;
+}
+nav.navegacion-principal a:last-child{
+    border: 2px solid #009933;
+
+    color: #009933;
+}
+nav.navegacion-principal a:last-child:hover{
+    color: #ffffff;
+}
+
+
+@media only screen and (min-width: 768px){
+    nav.navegacion-principal {
+     
+        width: 67%;
+        float: right;
+        text-align: right;
+        display: block;
+        
+    }
+}
+
+nav.navegacion-principal a {
+    margin-right: 50px;
+    padding: 7px 10px;
+    display: inline-block;
+    width: auto;
+    display: inline;
+    text-align: center;
+    margin: 0 20px 0 0;    
+}
+
+/*meni movilll*/
+
+div.menu-movil {
+    width: 60px;
+    display: block;
+    float: right;
+    text-align: right;
+    margin-top: 12px;
+}
+@media only screen and (min-width: 768px){
+         div.menu-movil {
+    
+        display: none;      
+        }
+}
+div.menu-movil span {
+    height: 8px;
+    margin-bottom: 6px;
+    background-color: white;
+    display: block;
+}
+
+
+h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #353535;
+}
+
+
+
+
+div.contador {
+    position: relative;
+    height: auto;
+
+}
+
+div.contador::before {
+    background-image: url(../img/im.png); 
+    content:'';
+}
+
+ul.resumen-evento {
+    position: relative;
+    padding: 120px 0;
+}
+ul.resumen-evento li {
+   width: 50%;
+   float: left;
+   text-align: center;
+   color: #ffffff;
+   text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+}
+
+
+@media only screen and (min-width: 768px){
+    ul.resumen-evento li {
+       width: 25%;
+   
+    }
+}
+
+p.numero {
+    color:  #ffffff;
+    font-size: 4em;
+    display: block;
+    margin: 0 0 10px 0;
+    font-family: 'Oswald', sans-serif;
+}
+
+/*lista de las tres lista de precios*/
+
+p.numero {
+    color: #009933;
+    font-size: 4em;
+    display: block;
+    margin: 0 0 10px 0;
+    font-family: 'Oswald', sans-serif;
+}
+
+ul.lista-precios >li {
+    padding: 10px;
+}
+@media only screen and (min-width: 768px){
+     ul.lista-precios >li {
+    float: left;
+    width: 33.3%
+    }
+}
+
+div.tabla-precio {
+    border: 1px solid #e1e1e1;
+    background-color: #ffffff;
+    padding: 40px 0;
+    text-align: center;
+    transition: all .3s ease;
+}
+div.tabla-precio:hover{
+    transform: scale(1.1);
+    border-width: 1px solid;
+    box-shadow: 0px 0px 50px #666;
+
+}
+
+
+div.tabla-precio ul li {
+   font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #868686;
+    line-height: 26px;
+
+
+}
+
+div.tabla-precio h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+
+div.tabla-precio ul li :before {
+    font-family: 'Oswald', sans-serif;
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 5px;
+    font-size:  20 px;
+
+}
+
+/*botonnn*/
+.button{
+    background-color: #009933;
+    padding: 10px 40px;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Oswald', sans-serif;
+    text-decoration:  none;
+    font-size: 1em;
+    margin-top: 20px;
+    display: inline-block;
+    transition: all .3s ease;
+    border: 2px solid #009933;
+
+}
+.button:hover {
+    background-color: #e33000;
+}
+
+.button.hollow, 
+.button.hollow:hover {
+    background-color: white;
+    color: #009933;
+}
+
+
+
+
+form.registro h3{
+    text-align:center;
+    text-transform:uppercase;
+    margin: 20px 0 0 0;
+}
+form.registro label {
+    margin-bottom: 5px;
+    font-weight:  bold;
+
+}
+/*h4 {
+    text-align: center;
+    text-transform: uppercase;
+    border-bottom: 2px solid greenyellow;
+    padding-bottom: 10px;
+    font-size: 1.2em;
+}*/
+
+div.caja {
+    background-color: white;
+    border:1px solid #e1e1e1;
+    padding:  10px;
+    margin: 10;
+}
+
+div.campo {
+    padding: 20px;
+}
+
+@media only screen and (min-width: 768px){
+     div.campo {
+    float: left;
+    width: 33.3%
+    }
+}
+div.paquetes .tabla-precio:hover{
+    transform: none;
+    box-shadow: none;
+
+}
+
+div.paquetes .tabla-precio input{
+    clear: both;
+    width: 100px;
+    margin: 10px auto 0 auto;
+    display: block;
+}
+
+.contenido-dia {
+    padding: 20px;
+    display:none;
+}
+
+@media only screen and (min-width: 768px){
+    .contenido-dia > div {
+    float: left;
+    width: 33.3%
+    }
+    
+}
+
+.contenido-dia > div p{
+    text-align: left;
+}
+.contenido-dia > div label{
+    display: block;
+    margin-bottom: 10px;
+}
+
+.contenido-dia > div input{
+    margin-right: 10px;
+}
+
+.contenido-dia > div label time {
+    color:  #009933;
+    font-weight: bold;
+}
+
+/*final calcular de los totale*/
+
+div.resumen p {
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
+div.resumen div.extras {
+    float: left;
+    width: 50%;
+    padding: 30px;
+}
+div.resumen div.erden{
+    text-align: right;
+    width: 50%;
+    padding: 30px;
+}
+div.resumen input {
+    display: block;
+    margin: 10px auto;
+}
+
+
+
+
+#suma-total {
+    text-align: center;
+    font-size: 2em;
+    color: #009933;
+    
+}
+
+
+
+
+#error {
+    clear: both;
+}
+
+
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}

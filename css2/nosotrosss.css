@@ -1,0 +1,79 @@
+/* Global */
+.container{
+  width:70%;
+  margin:auto;
+  overflow:hidden;
+}
+.dark{
+  padding:20px;
+  background:#35434a;
+  color:#ffffff;
+  margin-top:20px;
+  margin-bottom:1px;
+  border-radius: 10%;
+}
+.dark1{
+  padding:20px;
+  background:#35434a;
+  color:#ffffff;
+  margin-top:15px;
+  margin-bottom:1px;
+  
+}
+.container .aqua{
+  background: green;
+  color: whitesmoke; 
+  padding:20px;
+  margin-bottom:1px;
+  margin-top:20px;
+  border-radius: 5%;
+}
+
+/* Sidebar */
+aside#sidebar{
+  float:right;
+  width:30%;
+  margin-top:60px;
+}
+
+/* Main-col */
+article#main-col{
+  float:left;
+  width:65%;
+}
+
+/* Services */
+ul#services {
+  list-style: none;
+  padding:20px;
+  border: #cccccc solid 1px;
+  margin-bottom:5px;
+  background:#e6e6e6;
+}
+
+
+
+/* Media Queries */
+@media(max-width: 768px){
+  #newsletter ,
+  #newsletter form,
+  #boxes .box,
+  article#main-col,
+  aside#sidebar{
+    float:none;
+    text-align:center;
+    width:100%;
+  }
+
+ 
+
+  #showcase {
+    margin-top:40px;
+  }
+
+  #newsletter button, .quote button{
+    display:block;
+    width:100%;
+  }  
+
+}

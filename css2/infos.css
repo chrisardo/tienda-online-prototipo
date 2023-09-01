@@ -1,0 +1,170 @@
+
+#blog h3
+{
+    text-align: center;
+}
+#blog .contenedor
+{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#blog article
+{
+    margin:  15px;
+}
+
+#blog img
+{
+    width: 100%;
+    max-width: 280px;
+}
+
+/*info*/
+#infos
+{
+    
+    color: blue;
+    text-align: center;
+    padding: 20px;    
+}
+
+#infos .contene
+{
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80%;
+        
+}
+
+.info-pet
+{
+   
+    
+    margin: 20px;    
+}
+.pet-info
+{
+    
+    left: 100%;
+    margin: 20px;    
+}
+.info-pet img
+{
+    width: 250px;
+    max-height: 75%;
+    border-radius: 50%;
+    border: 7px solid orange;
+}
+.pet-info img
+{
+    width: 198px;
+    max-height: 80%;
+    border-radius: 50%;
+    border: 7px solid green;
+}
+@media (min-width:1024px)
+{
+    .info-pet
+    {
+        width: auto;
+    }
+    .pet-info
+    {
+        width: auto;
+    }
+}
+
+/*----estilos de cursos----*/
+.section__titulo
+{
+    text-align: center;
+    font-size: 25px;
+    color:blue;
+}
+
+.cursos__columna
+{
+    position: relative;
+    margin-bottom: 5px;/*15*/
+    top: 30px;
+}
+
+.cursos__descripcion
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    color:whitesmoke;
+    background:rgba(0,0,0,0.4);
+    width: 28%;/*50*/
+    height: 65%;
+    padding: 5px;
+    
+}
+
+.cursos__titulo
+{
+    font-size: 25px;
+    margin: 5px 0;
+}
+
+.cursos__txt
+{
+    font-size: 14px;
+    padding: 0;
+}
+
+.cursos__columna img
+{
+    width: 50%;
+    height: 65%;
+}
+
+/*--Estilo responsive--*/
+@media (min-width:480px)
+{
+    .blog, .cursos
+    {
+        display: flex;
+        justify-content: space-between;
+        margin-top: -90px;
+        
+    }
+
+    .blog
+    {
+        font-size: 30px;
+        margin: 5px 0;
+    }
+
+    .section__titulo
+    {
+        width: 100%;
+    }
+    .cursos
+    {
+        flex-wrap: wrap;
+        margin-top: 0;
+    }
+
+    .cursos__columna
+    {
+        width: 50%;
+    }
+
+    /*.cursos__descripcion
+    {
+        width: 80%;
+        height: 91%;
+        padding: 0px;
+    }*/
+
+    
+
+
+
+}
