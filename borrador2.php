@@ -1,113 +1,524 @@
-<?php
-    require("connectdb.php");
-    include("conexion.php");
-    include 'sed.php';
-    $idlog = @$_SESSION['idusu'];
-    echo $idlog;
-    $productos_vendidos = mysqli_query($mysqli, "SELECT *FROM productos_vendidos WHERE id_empresa='$idlog'");
-    $productosvendidos = mysqli_fetch_all($productos_vendidos, MYSQLI_ASSOC);
-    foreach ($productosvendidos as $rowpv) {
-        $id_pv = $rowpv["idprod_vendido"];
-        $idorden_pv = $rowpv["id_orden"];
-        //echo $idorden_pv;
-        //}
-        $queryorden = "SELECT *FROM ordenes WHERE estado_orden=2 and id_orden='$idorden_pv'";
-        $resultorden = mysqli_query($conexion, $queryorden);
-        $orden = mysqli_fetch_all($resultorden, MYSQLI_ASSOC);
-        $cantorden = mysqli_num_rows($resultorden);
-        //if ($cantorden > 0) {
-        ?>
-        <div style="width: 96%; margin-left: 10px; border:2px solid blue; margin-top:4px;">
-            <div style="width: 100%; border:2px solid blue;">
-                <img src="img/ordenes.png" style="width: 30px; height: 30px; margin-left: 6px; margin-top: -10px;">
-                <h1 style="display: inline-block; font-size: 16px;">Productos vendidos: <?php echo $cantorden; ?></h1>
-            </div>
-            <?php
-                foreach ($orden as $row2) {
-                    $id_orden = $row2['id_orden'];
-                    $idpago_orden = $row2['idpago'];
-                    $idusu_clientes = $row2['idusu'];
-                    $id_repartidor = $row2['id_repartidor'];
-                    $fecha_orden = $row2['fecha_orden'];
-                    $hora_orden = $row2['hora_orden'];
-                    $ordeneliminado_cliente = $row2['ordeneliminado_cliente'];
-                    $pedidopagosql = "SELECT * FROM pedidopago where idpago='$idpago_orden'";
-                    $result_pedidopago = mysqli_query($conexion, $pedidopagosql);
-                    $pedidopagos = mysqli_fetch_all($result_pedidopago, MYSQLI_ASSOC);
-                    foreach ($pedidopagos as $ro) {
-                        $id_cliente = $ro['idusu'];
-                        $montototal = $ro['montototal'];
-                    }
-                    ?>
-                <div style="width: 99%; margin-left: 10px;">
-                    <div style="display: inline-block; ">
-                        <img src="img/reservaenviada.png" style="width: 96px; height: 110px; margin-top: -110px;">
-                    </div>
-                    <div style="display: inline-block;">
-                        <p style="color:blue; margin-top: -15px;">
-                            Cod: <strong><?php echo $rowpv['idprod_vendido']; ?></strong>
-                        </p>
-                        <p style="color:blue; margin-top: -15px;">
-                            Medio pago: <strong><?php echo $ro['medio']; ?></strong>
-                        </p>
-                        <p style="margin-left: 1px; margin-top: -15px;"><strong>Estado orden:
-                                <?php
-                                        if ($row2['estado_orden'] == 0) {
-                                            echo "Pedido enviado";
-                                        } else if ($row2['estado_orden'] == 1) {
-                                            echo "Pedido en proceso";
-                                        } else if ($row2['estado_orden'] == 2) {
-                                            echo "Pedido entregado";
-                                        } else if ($row2['estado_orden'] == 3) {
-                                            if ($_SESSION['rolusu'] == "user") {
-                                                echo "Cancelaste tu orden";
-                                            } else {
-                                                echo "Canceló orden";
-                                            }
-                                        }  ?></strong></p>
-                        <div style="margin-top: -15px; ">
-                            <div style="display: inline-block;">
-                                <p>
-                                    <strong>Pedido realizado el: <?php echo $fecha_orden . " " . $hora_orden; ?> </strong>
-                                </p>
-                            </div>
-                            <div style="display: inline-block;">
-                                <p style="margin-left: 25px; color:orangered; font-size: 22px; margin-top: -40px;">
-                                    <strong>S/. <?php echo $ro['montototal']; ?></strong>
-                                </p>
-                            </div>
-                        </div>
-                        <a class="btn btn-primary" href="detalleorden.php?id=<?php echo $id_orden; ?>&ft=1" style="width:70px; margin-top: -16px;" role="button" value="Ver torta">
-                            <strong> Ver</strong>
-                        </a>
-                    </div>
-                </div>
-                <div style="width: 90%; margin-left: 16px; background: blue; height: 3px; margin-top: 4px;"></div>
-            <?php } ?>
-        </div>
-    <?php }/*} else { ?>
-        <div class=" container container-web-page ">
-            <div class=" row justify-content-md-center border-primary" style="background-color: orange;border-radius: 35px; width: 100%; margin-left: 0;">
-                <div class="col-12 col-md-6">
-                    <figure class="full-box">
-                        <center>
-                            <img src="img/ordenes.png" alt="registration_killaripostres" class="img-fluid">
-                        </center>
-                    </figure>
-                </div>
-                <div class="w-100"></div>
-                <div class="col-12 col-md-6">
-                    <h3 style="color:white;" class="text-center text-uppercase poppins-regular font-weight-bold">
-                        <strong>PRODUCTOS VENDIDOS</strong></h3>
+<br><br><br>
+<div class="container">
 
-                    <p class="text-justify">
-                        <center>
-                            <strong style="color:white;">
-                                Aquí se mostrarán los productos que has vendido.</strong>
-                        </center>
+    <div style="width: 94%; margin-left: 18px;">
+        <form action="" method="post" class="formulario column column--50 bg-orange">
+            <label for="" style="color:blue;font-size: 22px;" class="formulario__label">
+                <strong>Categorias:</strong>
+            </label>
+            <select id="soporte" class="form-control" name="nombrecategor" required="required">
+                <?php if (isset($_POST['seleccionar'])) {
+                    $nombrecategor = $_POST['nombrecategor'];
+                    $nombcate = sed::encryption($nombrecategor);
+                    if ($nombrecategor == "-") {
+                        echo "No seleccionó la cateogoria"; ?>
+                <?php } else { ?>
+                <?php if ($nombrecategor == "Todos") { ?>
+                <option value="Todos" selected="">Todos</option>
+                <?php } else { //selecciono la categoria
+                            $sql2categ = "SELECT * FROM categoria where nombrecateg='$nombcate'";
+                            $resultado2categ = mysqli_query($conexion, $sql2categ);
+                            $categorias2 = mysqli_fetch_all($resultado2categ, MYSQLI_ASSOC);
+                            foreach ($categorias2 as $rowcate) {
+                            } ?>
+                <option value="<?php echo sed::decryption($rowcate['nombrecateg']); ?>" selected="">
+                    <?php echo sed::decryption($rowcate['nombrecateg']); ?>
+                </option>
+                <?php } ?>
+                <?php } ?>
+                <?php } else { ?>
+                <option value="Todos" selected="">Seleccione categoria del producto</option>
+                <?php } ?>
+                <?php
+                $sqlcateg = "SELECT * FROM categoria group by nombrecateg ORDER BY idcategoria DESC";
+                $resultadocateg = mysqli_query($conexion, $sqlcateg);
+                $categorias = mysqli_fetch_all($resultadocateg, MYSQLI_ASSOC);
+                foreach ($categorias as $rowcat) {
+                    $idcat = sed::decryption($rowcat['idcategoria']);
+                    $nombrecatego = sed::decryption($rowcat['nombrecateg']);
+                    echo '<option value="' . $nombrecatego . '">' . $nombrecatego . '</option>';
+                }
+                ?>
+                <option value="Todos">Todos</option>
+            </select>
+            <input type="submit" name="seleccionar" value="Seleccionar" class="btn btn-primary">
+        </form>
+    </div><br>
+    <?php
+    $sqlq = "SELECT*FROM productos where cantistock != 0  ORDER BY idproducto DESC";
+    $resul_cant = mysqli_query($conexion, $sqlq);
+    $cantidad = mysqli_num_rows($resul_cant);
+    $torta = mysqli_fetch_all($resul_cant, MYSQLI_ASSOC);
+    ?>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+        <?php
+        if (isset($_POST['seleccionar'])) {
+            $nombrecategor = $_POST['nombrecategor'];
+            $nombcate = sed::encryption($nombrecategor);
+        ?>
+
+        <?php if ($nombrecategor == "Todos") { ?>
+        <?php foreach ($torta as $row) {
+                    $id = $row['idproducto'];
+                    $ide_prod = $row['id_empresa'];
+                    $idcategprod = $row['codigocate'];
+                    $querycat = "SELECT*FROM categoria where codigocate='$idcategprod' ORDER BY idcategoria DESC";
+                    $resultcat = mysqli_query($conexion, $querycat);
+                    $catego = mysqli_fetch_all($resultcat, MYSQLI_ASSOC);
+                    foreach ($catego as $row2) {
+                        $id_categ = $row2['idcategoria'];
+                    }
+                    $consulta_u = ("SELECT * FROM logueo_empresa  WHERE logueo_empresa.id_empresa='$ide_prod'");
+                    $query1u = mysqli_query($mysqli, $consulta_u);
+                    $empres = mysqli_fetch_all($query1u, MYSQLI_ASSOC);
+                    foreach ($empres as $arraye) {
+                    } ?>
+        <div class="col mb-4">
+            <div class="card h-100">
+                <img src="data:image/jpg;base64,<?php echo base64_encode($rowp['imagproducto']); ?>" height="150"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title text-primary" style="font-size: 18px;">
+                        <strong> <?php echo sed::decryption($rowp['nombreproducto']); ?></strong>
+                    </h5>
+                    <p class="card-text">
+                        <strong>Empresa: <?php echo sed::decryption($arraye["nombreempresa"]); ?></strong>
                     </p>
-                    </p>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="card-text ">
+                                <strong><?php echo sed::decryption($row2['nombrecateg']); ?></strong>
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <p class="card-text text-end text-primary">
+                                <strong>S/.<?php echo sed::decryption($rowp['costoproducto']); ?> </strong>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer border-primary">
+                    <!--poner cada boton al costado-->
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="verproducto.php?idproducto=<?php echo $id; ?>" class="btn btn-outline-primary">
+                                Ver...
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="index.php?idproducto=<?php echo $id; ?>&index=1&p=1"
+                                class="btn btn-outline-primary">
+                                <img src="img/carrito.png" style="width: 30px; height: 20px;" alt="imgproductos">
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    <?php }*/ ?>
+        <?php } ?>
+        <?php } else { //si selecciono la opcion
+                $sql2categ = "SELECT * FROM categoria where nombrecateg='$nombcate'";
+                $resultado2categ = mysqli_query($conexion, $sql2categ);
+                $categorias2 = mysqli_fetch_all($resultado2categ, MYSQLI_ASSOC);
+                foreach ($categorias2 as $rowcat) {
+                    $idcat2 = $rowcat['codigocate'];
+                }
+                $sql1 = "SELECT * FROM productos where codigocate='$idcat2' and cantistock != 0 ORDER BY idproducto ASC";
+                $resultado = mysqli_query($conexion, $sql1);
+                $persona = mysqli_fetch_all($resultado, MYSQLI_ASSOC); ?>
+        <?php foreach ($persona as $ro) {
+                    $id = $ro['idproducto'];
+                    $ide_prod = $ro['id_empresa'];
+                    $consulta_u = ("SELECT * FROM logueo_empresa  WHERE logueo_empresa.id_empresa='$ide_prod'");
+                    $query1u = mysqli_query($conexion, $consulta_u);
+                    $empres = mysqli_fetch_all($query1u, MYSQLI_ASSOC);
+                    foreach ($empres as $arraye) {
+                    } ?>
+        <div class="contorno2">
+            <div class="divimg">
+                <img src="data:image/jpg;base64,<?php echo base64_encode($ro['imagproducto']); ?>"
+                    style="width: 100%; height:100px;" alt="imgproductos">
+                <!--<img src="img/logo.png" style="width: 100%; height:100px;" alt="imgproductos"-->
+            </div>
+            <div style="width: 102%;">
+                <div class="pe">
+                    <p style="color: blue;">
+                        <strong> <?php echo sed::decryption($ro['nombreproducto']); ?></strong>
+                    </p>
+                </div>
+                <a href="verempresa.php?id=<?php echo $arraye["id_empresa"]; ?>" style="color:green; ">
+                    <div class="pe" style="margin-top:-12px;">
+                        <p>
+                            <strong>Empresas: <?php echo sed::decryption($arraye["nombreempresa"]); ?></strong>
+                        </p>
+                    </div>
+                </a>
+                <div style="margin-top:-12px; width: 100%;">
+                    <div class="contenedor3">
+                        <p class="pc"><strong><?php echo sed::decryption($rowcat['nombrecateg']); ?></strong>
+                        </p>
+                    </div>
+                    <div class="contenedor3">
+                        <p class="pc" style="color:orangered;"><strong>S/.<?php echo sed::decryption($ro['costoproducto']);
+                                                                                        ?> </strong></p>
+                    </div>
+                </div>
+            </div>
+            <div style="widh:100%;">
+                <div class="btnp" style="display: inline-block;">
+                    <a href="verproducto.php?idproducto=<?php echo $id; ?>" style="color:green; ">
+                        <div class="buttonprod btn btn-primary">
+                            Ver
+                        </div>
+                    </a>
+                </div>
+                <div style="display: inline-block;">
+                    <a href="index.php?idproducto=<?php echo $id; ?>&productos=1&p=1" style="color:blue; ">
+                        <div style="border: 2px solid blue;" class="buttonprod btn btn-primary">
+                            Añadir al carrito
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        <?php } ?>
+        <?php } ?>
+        <?php } else { // no selecciono
+        ?>
+        <?php
+            foreach ($torta as $row) {
+                $id = $row['idproducto'];
+                $ide_prod = $row['id_empresa'];
+                $idcategprod = $row['codigocate'];
+                $querycat = "SELECT*FROM categoria where codigocate='$idcategprod' ORDER BY idcategoria DESC";
+                $resultcat = mysqli_query($conexion, $querycat);
+                $catego = mysqli_fetch_all($resultcat, MYSQLI_ASSOC);
+                foreach ($catego as $row2) {
+                    $id_categ = $row2['idcategoria'];
+                }
+                $consulta_u = ("SELECT * FROM logueo_empresa  WHERE logueo_empresa.id_empresa='$ide_prod'");
+                $query1u = mysqli_query($conexion, $consulta_u);
+                $empres = mysqli_fetch_all($query1u, MYSQLI_ASSOC);
+                foreach ($empres as $arraye) {
+                } ?>
+        <div class="col mb-4">
+            <div class="card h-100">
+                <img src="data:image/jpg;base64,<?php echo base64_encode($row['imagproducto']); ?>" height="150"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title text-primary" style="font-size: 18px;">
+                        <strong> <?php echo sed::decryption($row['nombreproducto']); ?></strong>
+                    </h5>
+                    <p class="card-text">
+                        <strong>Empresa: <?php echo sed::decryption($arraye["nombreempresa"]); ?></strong>
+                    </p>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="card-text ">
+                                <strong> <?php echo sed::decryption($row2['nombrecateg']); ?></strong>
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <p class="card-text text-end text-primary">
+                                <strong>S/.<?php echo sed::decryption($row['costoproducto']);
+                                                    ?> </strong>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer border-primary">
+                    <!--poner cada boton al costado-->
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="verproducto.php?idproducto=<?php echo $id; ?>" class="btn btn-outline-primary">
+                                Ver...
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="index.php?idproducto=<?php echo $id; ?>&productos=1&p=1"
+                                class="btn btn-outline-primary">
+                                <img src="img/carrito.png" style="width: 30px; height: 20px;" alt="imgproductos">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php } ?>
+        <?php } ?>
+        <br>
+        <?php
+        if (@$p == 1) {
+            extract($_GET);
+            $idus = $_SESSION['idusu'];
+            $sql = "SELECT * FROM productos WHERE idproducto=$idproducto";
+            //la variable  $mysqli viene de connect_db que lo traigo con el require("connect_db.php");
+            $producsql = mysqli_query($mysqli, $sql);
+            $producto = mysqli_fetch_all($producsql, MYSQLI_ASSOC);
+            foreach ($producto as $row) {
+                $idp = $row['idproducto'];
+                $nombreprodu = sed::decryption($row['nombreproducto']);
+                $costoprodu = sed::decryption($row['costoproducto']);
+            }
+            $checkprod = mysqli_query($mysqli, "SELECT * FROM carrito WHERE idproducto='$idproducto'");
+            $check_produc = mysqli_num_rows($checkprod);
+            $preciototal = ($costoprodu * 1);
+            $query = "INSERT INTO carrito 
+                                        (idproducto, idusu, cantidadpedir, precio, fechacarrito, horacarrito, estadocarrito, total) 
+                                VALUES('$idp', '$idus', '1','$costoprodu' ,now(), now(), '1', '$preciototal')";
+            $resultado = $conexion->query($query);
+            if ($resultado) {
+                //echo "se guardo";
+                echo "<script>location.href='index.php?productos=1'</script>";
+            } else {
+                //echo "no se guardo";
+                //echo "<script>location.href='index.php?productos=1'</script>";
+            }
+        }
+        ?>
+    </div>
+    <style>
+    /*cuadro productos*/
+    div .contorno {
+        width: 97%;
+        margin-left: 15px;
+    }
+
+    div .contorno2 {
+        display: inline-block;
+        border: 2px solid blue;
+        width: 24%;
+        margin-left: 8px;
+        background-color: greenyellow;
+    }
+
+    div .buttonprod {
+        border: 2px solid green;
+        height: 36px;
+        text-align: center;
+        margin-left: 3px;
+        background-color: white;
+    }
+
+    div .pe {
+        font-size: 14px;
+        margin-left: 3px;
+    }
+
+    div .contenedor3 {
+        display: inline-block;
+        margin-left: 5px;
+        width: 46%;
+        height: 32px;
+    }
+
+    /*--Estilos responsive--*/
+    @media screen and (min-width:350px) {
+        div .contorno {
+            width: 97%;
+            margin-left: 12px;
+        }
+
+        div .pe {
+            font-size: 11px;
+        }
+
+        div .contorno2 {
+            width: 47%;
+            margin-left: 2px;
+            margin-top: 4px;
+        }
+
+        div .contenedor3 {
+            display: inline-block;
+            margin-left: 3px;
+            width: 46%;
+            height: 32px;
+        }
+
+        div .pc {
+            font-size: 12px;
+        }
+
+        div .buttonprod {
+            width: 100%;
+            margin-left: 5px;
+            font-size: 11px;
+        }
+    }
+
+    @media screen and (min-width:390px) {
+        div .pe {
+            font-size: 11px;
+        }
+
+        div .contorno2 {
+            width: 47%;
+            margin-left: 2px;
+            margin-top: 4px;
+        }
+
+        div .contenedor3 {
+            display: inline-block;
+            margin-left: 3px;
+            width: 46%;
+            height: 32px;
+        }
+
+        div .pc {
+            font-size: 12px;
+        }
+
+        div .buttonprod {
+            width: 97%;
+            margin-left: 6px;
+            font-size: 12px;
+        }
+    }
+
+    @media screen and (min-width:414px) {
+        div .buttonprod {
+            width: 96%;
+            margin-left: 6px;
+            font-size: 13px;
+        }
+    }
+
+    @media screen and (min-width:478px) {
+        div .pe {
+            font-size: 14px;
+        }
+
+        div .contorno2 {
+            width: 32%;
+        }
+
+        div .buttonprod {
+            width: 100%;
+            margin-left: 6px;
+            font-size: 11px;
+        }
+    }
+
+    @media screen and (min-width:576px) {
+        div .pe {
+            font-size: 14px;
+        }
+
+        div .contorno2 {
+            width: 32%;
+        }
+
+        div .buttonprod {
+            width: 100%;
+            margin-left: 6px;
+            font-size: 13px;
+        }
+    }
+
+    @media screen and (min-width:624px) {
+        div .pe {
+            width: 100%;
+            font-size: 12px;
+        }
+
+        div .contorno2 {
+            width: 31%;
+            margin-left: 6px;
+        }
+
+        div .buttonprod {
+            width: 100%;
+            margin-left: 7px;
+            font-size: 14px;
+        }
+    }
+
+    @media screen and (min-width:730px) {
+        div .pe {
+            font-size: 15px;
+        }
+
+        div .contorno2 {
+            width: 32%;
+            margin-left: 6px;
+        }
+
+        div .contenedor3 {
+            display: inline-block;
+            margin-left: 4px;
+            width: 46%;
+            height: 32px;
+        }
+
+        div .pc {
+            font-size: 15px;
+        }
+
+        div .buttonprod {
+            width: 100%;
+            margin-left: 8px;
+            font-size: 17px;
+        }
+    }
+
+    @media screen and (min-width:1020px) {
+        div .pe {
+            font-size: 14px;
+        }
+
+        div .contorno2 {
+            width: 23%;
+            margin-left: 12px;
+        }
+
+        div .contenedor3 {
+            display: inline-block;
+            margin-left: 4px;
+            width: 46%;
+            height: 32px;
+        }
+
+        div .pc {
+            font-size: 14px;
+        }
+
+        div .buttonprod {
+            width: 100%;
+            margin-left: 12px;
+            font-size: 18px;
+        }
+    }
+
+    @media screen and (min-width:1270px) {
+        div .pe {
+            font-size: 16px;
+        }
+
+        div .contorno2 {
+            width: 24%;
+            margin-left: 9px;
+        }
+
+        div .contenedor3 {
+            display: inline-block;
+            margin-left: 4px;
+            width: 46%;
+            height: 32px;
+        }
+
+        div .pc {
+            font-size: 15px;
+        }
+
+        div .buttonprod {
+            width: 100%;
+            margin-left: 14px;
+            font-size: 20px;
+        }
+    }
+    </style>

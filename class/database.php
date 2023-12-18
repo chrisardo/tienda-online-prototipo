@@ -7,7 +7,7 @@ class Database extends PDO
     {
 
         try {
-            parent::__construct('mysql:host=localhost;dbname=restaurantapp', 'root', '');//localhost, nombre bd, user, contrasena
+            parent::__construct('mysql:host=localhost;dbname=tiendaonline', 'root', '');//localhost, nombre bd, user, contrasena
             parent::setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->exec("set names utf8");
         } catch (Exception $ex) {

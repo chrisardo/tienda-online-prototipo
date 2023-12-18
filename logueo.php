@@ -1,6 +1,6 @@
 <?php session_start(); //inciar session
 include 'sed.php';
-require("connectdb.php"); //requerir la conexion a la base de datos
+require("controlador/conexion.php"); //requerir la conexion a la base de datos
 //require("conexion.php"); //requerir la conexion a la base de datos
 /*if (isset($_POST['token']) && isset($_POST['action'])) {
     $token = $_POST['token'];
@@ -16,24 +16,25 @@ if (isset($_POST['inicio'])) {
     $contra1 = sed::encryption($contrase);
     $contra2 = sed::encryption($contrase);
     //para la empresa
-    $sqlem = mysqli_query($mysqli, "SELECT * FROM logueo_empresa
+    $sqlem = mysqli_query($conexion, "SELECT * FROM logueo_empresa
    INNER JOIN rol on logueo_empresa.codigorol=rol.codigorol
    WHERE logueo_empresa.username_empresa='$username2' and logueo_empresa.contrase_empresa='$contra2' ");
     $cantem = mysqli_num_rows($sqlem);
     //para el administrador
-    $sqladm = mysqli_query($mysqli, "SELECT * FROM logueo INNER JOIN rol 
+    $sqladm = mysqli_query($conexion, "SELECT * FROM logueo INNER JOIN rol 
    on logueo.codigorol=rol.codigorol WHERE usernameusu='$username2' and contraadmin='$contra2'");
     $cantadmin = mysqli_num_rows($sqladm);
     //para los usuarios normales
-    $sqlu = mysqli_query($mysqli, "SELECT * FROM logueo INNER JOIN rol 
+    $sqlu = mysqli_query($conexion, "SELECT * FROM logueo INNER JOIN rol 
       on logueo.codigorol=rol.codigorol WHERE usernameusu='$username2' and contrausu='$contra2'");
     $cantusu = mysqli_num_rows($sqlu);
     //para el repartidor
-    $sqlre = mysqli_query($mysqli, "SELECT * FROM logueo_repartidor INNER JOIN rol 
+    $sqlre = mysqli_query($conexion, "SELECT * FROM logueo_repartidor INNER JOIN rol 
        on logueo_repartidor.codigorol=rol.codigorol 
        WHERE logueo_repartidor.username_repartidor='$username2' and logueo_repartidor.contrase_repartidor='$contra2'");
     $cantrepar = mysqli_num_rows($sqlre);
-    if (isset($_COOKIE["blocke" . $username2])) { } else {
+    if (isset($_COOKIE["blocke" . $username2])) {
+    } else {
         if ($cantusu > 0) {
             if ($use = mysqli_fetch_assoc($sqlu)) {
                 $apelliuse = sed::encryption($use['apellidousu']);
@@ -165,7 +166,8 @@ if (isset($_COOKIE["cerrarsesion"])) {
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <script src="js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 
     <!--<script src="https://www.google.com/recaptcha/api.js?render=6LdaxhsiAAAAAJf10JdThCppbMHLyiDH24SPp4r9"></script>
     <script>
@@ -214,16 +216,21 @@ if (isset($_COOKIE["cerrarsesion"])) {
                         <!-- id="form-login"-->
                         <label style="font-size: 14pt; color:#000;"><b>Username:</b></label>
                         <!--Etiqueta correo con estilo de tamaño de fuente:14pt de color blanco-->
-                        <input type="text" name="username" class="form-control" placeholder="Ingrese su nombre de usuario" required><br>
+                        <input type="text" name="username" class="form-control"
+                            placeholder="Ingrese su nombre de usuario" required><br>
                         <!--Entrada clase "inp" de tipo "texto" con un nombre "mail" de valor "nulo" con marcador de posicion "email"-->
                         <label style="font-size: 14pt; color:#000;"><b>Contraseña:</b></label>
                         <div style="width: 100%;">
-                            <input type="password" name="pass" ID="txtPassword" class="form-control" style="float: left; width: 85%;" placeholder="Ingrese su contraseña" required>
-                            <button id="show_password" class="btn btn-primary" style="float:left;height: 34px; margin-left: 3px;" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
+                            <input type="password" name="pass" ID="txtPassword" class="form-control"
+                                style="float: left; width: 85%;" placeholder="Ingrese su contraseña" required>
+                            <button id="show_password" class="btn btn-primary"
+                                style="float:left;height: 34px; margin-left: 3px;" type="button"
+                                onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
                         </div>
                         <div>
                             <center>
-                                <input class="btn btn-primary" type="submit" name="inicio" style="margin-top: 10px;" value="Iniciar Sesión">
+                                <input class="btn btn-primary" type="submit" name="inicio" style="margin-top: 10px;"
+                                    value="Iniciar Sesión">
                                 <!--<button type="button" id="entrar" style="color: white; margin-top: 6px;" class="btn btn-primary g-recaptcha">Ingresar</button>-->
                             </center><br>
                         </div>
@@ -251,21 +258,21 @@ if (isset($_COOKIE["cerrarsesion"])) {
                         $username2 = sed::encryption($nombreusuario);
                         $contra1 = sed::encryption($contrase);
                         $contra2 = sed::encryption($contrase);
-                        $sqle = mysqli_query($mysqli, "SELECT * FROM logueo_empresa
+                        $sqle = mysqli_query($conexion, "SELECT * FROM logueo_empresa
    INNER JOIN rol on logueo_empresa.codigorol=rol.codigorol
    WHERE logueo_empresa.username_empresa='$username2' and logueo_empresa.contrase_empresa='$contra2' ");
                         $cante = mysqli_num_rows($sqle);
                         //para el administrador
-                        $sqladm = mysqli_query($mysqli, "SELECT * FROM logueo INNER JOIN rol 
+                        $sqladm = mysqli_query($conexion, "SELECT * FROM logueo INNER JOIN rol 
    on logueo.codigorol=rol.codigorol WHERE usernameusu='$username2' and contraadmin='$contra2'");
                         $cantadmin = mysqli_num_rows($sqladm);
                         //para los usuarios normales
-                        $sqlu = mysqli_query($mysqli, "SELECT * FROM logueo INNER JOIN rol 
+                        $sqlu = mysqli_query($conexion, "SELECT * FROM logueo INNER JOIN rol 
       on logueo.codigorol=rol.codigorol WHERE usernameusu='$username2' and contrausu='$contra2'");
                         $cantusu = mysqli_num_rows($sqlu);
 
                         //para el repartidor
-                        $sqlre = mysqli_query($mysqli, "SELECT * FROM logueo_repartidor INNER JOIN rol 
+                        $sqlre = mysqli_query($conexion, "SELECT * FROM logueo_repartidor INNER JOIN rol 
 on logueo_repartidor.codigorol=rol.codigorol 
 WHERE logueo_repartidor.username_repartidor='$username2' and logueo_repartidor.contrase_repartidor='$contra2'");
                         if (isset($_COOKIE["blocke" . $username2])) {
@@ -280,7 +287,8 @@ WHERE logueo_repartidor.username_repartidor='$username2' and logueo_repartidor.c
                                     if ($contrase == sed::decryption($use['contrausu'])) {
                                         if ($use['baneo'] == 2) { //si está baneado
                                             echo "<div class='alert alert-danger' role='alert'>$nombreusuario su cuenta ha sido inhabilitada.</div>";
-                                        } else { }
+                                        } else {
+                                        }
                                     } else {
                                         echo "<div class='alert alert-danger' role='alert'>$nombreusuario su contraseña es incorrecta.</div>";
                                     }
@@ -295,7 +303,8 @@ WHERE logueo_repartidor.username_repartidor='$username2' and logueo_repartidor.c
                                     if ($contrase == sed::decryption($us2['contraadmin'])) { //si $f2 encuentra que el username es igual al pasadmin o la $pass quiere decir que es el administrador que se esta autentificando en el login
                                         if ($us2['baneo'] == 2) { //si está baneado$_SESSION['idusu'] = $us2['idusu'];
                                             echo "<div class='alert alert-danger' role='alert'>$nombreusuario su cuenta ha sido inhabilitada.</div>";
-                                        } else { }
+                                        } else {
+                                        }
                                     } else {
                                         echo "<div class='alert alert-danger' role='alert'>$nombreusuario su contraseña es incorrecta.</div>";
                                     }
@@ -307,7 +316,8 @@ WHERE logueo_repartidor.username_repartidor='$username2' and logueo_repartidor.c
                                     if ($contrase == sed::decryption($empre['contrase_empresa'])) {
                                         if ($empre['estado'] == 2) { //si está baneado
                                             echo "<div class='alert alert-danger' role='alert'>$nombreusuario su cuenta ha sido inhabilitada.</div>";
-                                        } else { }
+                                        } else {
+                                        }
                                     } else {
                                         echo "<div class='alert alert-danger' role='alert'>$nombreusuario su contraseña es incorrecta.</div>";
                                     }
@@ -319,7 +329,8 @@ WHERE logueo_repartidor.username_repartidor='$username2' and logueo_repartidor.c
                                     if ($repartidor['baneo'] == 1) { //si está baneado
                                         echo "<div class='alert alert-danger' role='alert'>$nombreusuario su cuenta ha sido inhabilitada.</div>";
                                     } else {
-                                        if ($contrase == sed::decryption($repartidor['contrase_repartidor'])) { } else {
+                                        if ($contrase == sed::decryption($repartidor['contrase_repartidor'])) {
+                                        } else {
                                             echo "<div class='alert alert-danger' role='alert'>$nombreusuario su contraseña es incorrecto.</div>";
                                         }
                                     }
@@ -336,30 +347,31 @@ WHERE logueo_repartidor.username_repartidor='$username2' and logueo_repartidor.c
                     }
                     ?>
                     <script>
-                        function mostrarPassword() {
-                            var cambio = document.getElementById("txtPassword");
+                    function mostrarPassword() {
+                        var cambio = document.getElementById("txtPassword");
 
-                            if (cambio.type == "password") {
-                                cambio.type = "text";
-                                $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
-                            } else {
-                                cambio.type = "password";
-                                $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
-                            }
+                        if (cambio.type == "password") {
+                            cambio.type = "text";
+                            $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+                        } else {
+                            cambio.type = "password";
+                            $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
                         }
-                        $(document).ready(function() {
-                            $('#usernam').on('input change', function() { //El boton se habilita cuando se escribe el formulario nombre
+                    }
+                    $(document).ready(function() {
+                        $('#usernam').on('input change',
+                            function() { //El boton se habilita cuando se escribe el formulario nombre
                                 if ($(this).val() != '') {
                                     $('#entrar').prop('disabled', false);
                                 } else {
                                     $('#entrar').prop('disabled', true);
                                 }
                             });
-                            //CheckBox mostrar contraseña
-                            $('#ShowPassword').click(function() {
-                                $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
-                            });
+                        //CheckBox mostrar contraseña
+                        $('#ShowPassword').click(function() {
+                            $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
                         });
+                    });
                     </script>
                 </div>
             </div>

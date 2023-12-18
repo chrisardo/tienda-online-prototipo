@@ -9,7 +9,6 @@ $celular = $_POST['celular'];
 $fechnacimiento = $_POST['fechanaci'];
 //$fechaBD = date("d-m-Y", strtotime($fechnacimiento));
 $generouse = $_POST['genero'];
-$ciudaduse = $_POST['ciudad'];
 @$politicause = $_POST['politica'];
 $passuser = $_POST['pass'];
 $rpassuser = $_POST['rpass'];
@@ -81,8 +80,8 @@ if (!empty($nombreuser) && !empty($apellidouser) && !empty($nombreusuario) && !e
                                     echo "Error: " . $query . "<br>" . mysqli_error($mysqli);
                                     //echo "<script>location.href='registro.php'</script>";
                                 }*/
-                                $qlogueo = "INSERT INTO logueo (nombreusu, apellidousu, contrausu,emailusu, usernameusu, celularusu, contraadmin, codigorol, fechanaci, generousu,fecharegistro, baneo,codciudad) 
-                                VALUES('$nombree', '$apellidoe', '$clavee','$maile','$nombreusuarioe','$celularp', '', '1','$fechnacimiento','$generousue', now(), '1','$ciudaduse')";
+                                $qlogueo = "INSERT INTO logueo (nombreusu, apellidousu, contrausu,emailusu, usernameusu, celularusu, contraadmin, codigorol, fechanaci, generousu,fecharegistro, baneo) 
+                                VALUES('$nombree', '$apellidoe', '$clavee','$maile','$nombreusuarioe','$celularp', '', '1','$fechnacimiento','$generousue', now(), '1')";
                                 $resultlogueo = $mysqli->query($qlogueo);
                                 if ($resultlogueo) {
                                     echo '<div class="alert alert-primary" role="alert">Registro exitoso, ahora puedes loguearte. </div>';
